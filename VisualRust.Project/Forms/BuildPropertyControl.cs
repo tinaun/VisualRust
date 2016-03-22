@@ -20,6 +20,7 @@ namespace VisualRust.Project.Forms
         private ComboBox optimizationBox;
         private CheckBox lto;
         private CheckBox emitDebug;
+        private CheckBox buildTests;
 
         public BuildPropertyControl(Action<bool> isDirtyAction)
         {
@@ -74,10 +75,13 @@ namespace VisualRust.Project.Forms
             lto = Utils.CreateCheckBox("Apply link-time optimization", Utils.Paddding().Left());
             mainPanel.Controls.Add(lto);
             mainPanel.SetColumnSpan(lto, 2);
-            emitDebug = Utils.CreateCheckBox("Emit debug info", Utils.Paddding().Left().Bottom());
+            emitDebug = Utils.CreateCheckBox("Emit debug info", Utils.Paddding().Left());
             mainPanel.Controls.Add(emitDebug);
             mainPanel.SetColumnSpan(emitDebug, 2);
-            return startingRow + 4;
+            buildTests = Utils.CreateCheckBox("Build Tests", Utils.Paddding().Left().Bottom());
+            mainPanel.Controls.Add(buildTests);
+            mainPanel.SetColumnSpan(buildTests, 2);
+            return startingRow + 6;
         }
 
         public void LoadSettings(ProjectConfig[] configs)
@@ -95,6 +99,8 @@ namespace VisualRust.Project.Forms
             lto.CheckedChanged += (src,arg) => config.LTO = lto.Checked;
             emitDebug.CheckState = ToCheckState(config.EmitDebug);
             emitDebug.CheckedChanged += (src,arg) => config.EmitDebug = emitDebug.Checked;
+            buildTests.CheckState = ToCheckState(config.BuildTests);
+            buildTests.CheckedChanged += (src, arg) => config.BuildTests = buildTests.Checked;
             config.Changed += (src, arg) => isDirty(config.HasChangedFrom(originalConfig));
         }
 

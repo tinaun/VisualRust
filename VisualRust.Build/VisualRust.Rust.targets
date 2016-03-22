@@ -57,6 +57,7 @@
            CrateType="$(CrateType)"
            LTO="$(LinkTimeOptimization)"
            DebugInfo="$(DebugSymbols)"
+           Test="$(BuildTests)"
            OptimizationLevel="$(OptimizationLevel)"
            TargetTriple="$(PlatformTarget)"/>
   </Target>
